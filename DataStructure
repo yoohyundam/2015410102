@@ -172,6 +172,7 @@ while True:
     if not line2:break
 
 total_user = cnt1
+user.close()
 
 friend = open('C:\\Users\\유현담\\Desktop\\friend.txt','r')
 
@@ -190,6 +191,7 @@ while True:
     if not line1:break
 
 total_friendship = cnt2
+friend.close()
 
 word = open('C:\\Users\\유현담\\Desktop\\word.txt', 'r')
 
@@ -216,13 +218,29 @@ while True:
 
     if not line2: break
 
+word.close()
 total_tweets = cnt3
 
-while rbtree.inorder(rbtree) == None:
-    TweetCnt = rbtree.inorder(rbtree)
-    if
+Tweets = list(UserTweet.keys())
+temp = {}
 
-interface = """
+for i in range(0,len(Tweets)):
+    if Tweets[i] in temp.keys():
+        a= temp.get(Tweets[i])
+        del temp[Tweets[i]]
+        temp[Tweets[i]] = a+1
+    else:
+        temp[Tweets[i]] = 1
+
+result = sorted(temp.items(), key=lambda x: x[1])
+maximum_tweet_num = result[0][1]
+minimum_tweet_num = result[-1][0]
+
+
+
+if __name__ == '__main__':
+
+        interface = """
     0. Read data files
     1. display statistics
     2. Top 5 most tweeted words
@@ -234,35 +252,39 @@ interface = """
     8. Find strongly connected components
     9. Find shortest path from a given user
     99. Quit
-    Select Menu :
     """
 print(interface)
 
-a = input()
-a == 4
+while True:
 
-if a == 0:
-    print("total_user : "+'%s' % total_user)
-    print("total_friendship : "+'%s' % total_friendship )
-    print("total tweets : "+'%s' % total_tweets)
+    chooser = input("Select Menu : ")
 
-elif a == 1:
-    print("Average Friend : "+ (total_friendship/total_user))
-    print("Minimum Friend")
-    print("Maximum Friend")
-    print("\n")
-    print("Average Tweet number : "+ (total_tweets/total_user))
-    print("Minimum Tweet number : ")
-    print("Maximum Tweet number : ")
+    if chooser == 0:
+            print("total_user : "+'%s' % total_user)
+            print("total_friendship : "+'%s' % total_friendship )
+            print("total tweets : "+'%s' % total_tweets)
 
-elif a == 4:
-    temp = input("단어를 입력하세요")
-    findWord = rbtree.search(temp)
-    print(findWord)
+    elif chooser == 1:
+        print("Average Friend : "+ format(total_friendship/total_user))
+        print("Minimum number of Friend")
+        print("Maximum number of Friend")
+        print("\n")
+        print("Average Tweet number : "+ format(total_tweets/total_user))
+        print("Minimum Tweet number : "+ format(minimum_tweet_num))
+        print("Maximum Tweet number : "+ format(maximum_tweet_num))
 
-elif a == 7:
-    temp = input("단어를 입력하세요")
-    findWord = rbtree.search(temp)
+    elif chooser == 4:
+        temp = input("단어를 입력하세요")
+        findWord = rbtree.search(temp)
+        print(findWord)
 
-    if findWord == None:
-        print("그런 유저가 없습니다.")
+    elif chooser == 7:
+        temp = input("단어를 입력하세요")
+        findWord = rbtree.search(temp)
+
+        if findWord == None:
+            print("그런 유저가 없습니다.")
+
+    if chooser == 99:
+            print("Quit")
+            break
