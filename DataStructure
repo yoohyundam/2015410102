@@ -179,19 +179,37 @@ friend = open('C:\\Users\\유현담\\Desktop\\friend.txt','r')
 cnt2 = 0
 
 while True:
-    line1 = friend.readline()
-    line2 = friend.readline()
+    f1 = friend.readline()
+    f2 = friend.readline()
 
-    line1 = line1[:-1]
-    line2 = line2[:-1]
+    f1 = f1[:-1]
+    f2 = f2[:-1]
 
     friend.readline()
     cnt2 = cnt2+1
-
+    
+    f_r = {'ID': f1, 'User': f2}
+    
     if not line1:break
 
 total_friendship = cnt2
 friend.close()
+
+fd = list(f_r.keys())
+temp = {}
+
+for i in range(0,len(fd)):
+    if fd[i] in temp.keys():
+        a= temp.get(fd[i])
+        del temp[fd[i]]
+        temp[fd[i]] = a+1
+    else:
+        temp[fd[i]] = 1
+
+result = sorted(temp.items(), key=lambda x: x[1])
+maximum_friend = result[0][1]
+minimum_friend = result[-1][0]
+
 
 word = open('C:\\Users\\유현담\\Desktop\\word.txt', 'r')
 
@@ -218,6 +236,7 @@ while True:
 
     if not line2: break
 
+
 word.close()
 total_tweets = cnt3
 
@@ -235,8 +254,8 @@ for i in range(0,len(Tweets)):
 result = sorted(temp.items(), key=lambda x: x[1])
 maximum_tweet_num = result[0][1]
 minimum_tweet_num = result[-1][0]
-
-
+top5user = (result[0][0],result[1][0],result[2][0],result[3][0],result[4][0])
+top5tweet = (result[0][0],result[0][1],result[0][3],result[0][4],result[0][5])
 
 if __name__ == '__main__':
 
@@ -257,34 +276,38 @@ print(interface)
 
 while True:
 
-    chooser = input("Select Menu : ")
+    a = input()
 
-    if chooser == 0:
+    if a == 0:
             print("total_user : "+'%s' % total_user)
             print("total_friendship : "+'%s' % total_friendship )
             print("total tweets : "+'%s' % total_tweets)
 
-    elif chooser == 1:
+    elif a == 1:
         print("Average Friend : "+ format(total_friendship/total_user))
-        print("Minimum number of Friend")
-        print("Maximum number of Friend")
+        print("Minimum number of Friend : "+format(minium_friend))
+        print("Maximum number of Friend : "+format(maximum_friend))
         print("\n")
         print("Average Tweet number : "+ format(total_tweets/total_user))
         print("Minimum Tweet number : "+ format(minimum_tweet_num))
         print("Maximum Tweet number : "+ format(maximum_tweet_num))
 
-    elif chooser == 4:
+    elif a == 2:
+        print(top5tweet)
+    elif a == 3:
+        print(top5user)
+    elif a == 4:
         temp = input("단어를 입력하세요")
         findWord = rbtree.search(temp)
         print(findWord)
 
-    elif chooser == 7:
+    elif a == 7:
         temp = input("단어를 입력하세요")
         findWord = rbtree.search(temp)
 
         if findWord == None:
             print("그런 유저가 없습니다.")
 
-    if chooser == 99:
+    if a == 99:
             print("Quit")
             break
